@@ -8,7 +8,12 @@ const dotenv = require('dotenv');
 const app = express();
 const PORT = 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: ["https://join-smlra.vercel.app"],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(json());
 
 dotenv.config();
