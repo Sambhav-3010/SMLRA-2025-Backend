@@ -33,8 +33,15 @@ app.get('/', (req, res) => {
 
 app.post('/submit', async (req, res) => {
   try {
-    const form = new Form(req.body);
+    const { name, email, rollNo, year, course, department, phone, age } = req.body;
+
+    if (!name || !email || !rollNo || !year || !course || !department || !phone || !age) {
+      return res.status(400).json({ error: 'All fields are required.' });
+    }
+
+    const form = new Form({ name, email, rollNo, year, course, department, phone, age });
     await form.save();
+
     res.status(201).json({ message: 'Form submitted successfully!' });
   } catch (error) {
     console.error('Error submitting form:', error);
