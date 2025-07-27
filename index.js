@@ -40,7 +40,6 @@ app.post('/submit', async (req, res) => {
 
     const form = new Form({ name, email, rollNo, year, course, department, phone, age });
     await form.save();
-
     res.status(201).json({ message: 'Form submitted successfully!' });
   } catch (error) {
     console.error('Error submitting form:', error);
