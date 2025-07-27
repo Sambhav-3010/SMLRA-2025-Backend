@@ -48,13 +48,11 @@ app.post('/submit', async (req, res) => {
 });
 
 app.post('/email', async (req, res) => {
-  console.log(req.cookies);
   try {
     const email = req.cookies.email;
     if (!email) {
       return res.status(400).json({ error: 'Email is required' });
     }
-
     const forms = await Form.find({ email });
     if (!forms || forms.length === 0) {
       return res.status(200).json({ message: 'No emails found' });
