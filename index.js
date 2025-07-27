@@ -9,7 +9,7 @@ const app = express();
 const PORT = 5000;
 
 app.use(cors({
-  origin: ["https://join-smlra.vercel.app", "*", "http://localhost:5173"],
+  origin: ["https://join-smlra.vercel.app", "http://localhost:5173"],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
