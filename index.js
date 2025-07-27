@@ -4,18 +4,19 @@ const { connect } = require('mongoose');
 const cors = require('cors');
 const Form = require('./models/form');
 const dotenv = require('dotenv');
-
+const cookieParser = require("cookie-parser");
 const app = express();
 const PORT = 5000;
 
 app.use(cors({
-  origin: ["https://join-smlra.vercel.app"],
+  origin: ["https://join-smlra.vercel.app", "*", "http://localhost:5173"],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 app.use(json());
-
+app.use(cookieParser());
 dotenv.config();
 const MONGO_URI = process.env.MONGO_URI;
 connect(MONGO_URI).then(() => {
@@ -47,25 +48,24 @@ app.post('/submit', async (req, res) => {
 });
 
 app.post('/email', async (req, res) => {
+  console.log(req.cookies);
   try {
-    if (!req.body || !req.body.email) {
-      return res.status(400).json({ error: 'Email is required' });
-    }
-    const email = req.body.email;
+    const email = req.cookies.email;
     if (!email) {
       return res.status(400).json({ error: 'Email is required' });
     }
+
     const forms = await Form.find({ email });
     if (!forms || forms.length === 0) {
       return res.status(200).json({ message: 'No emails found' });
-    }
-    else{
-      res.status(200).json({ message: "Email exists" });
+    } else {
+      return res.status(200).json({ message: 'Email exists' });
     }
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch emails' });
   }
 });
+
 
 app.listen(PORT, () => {
   console.log("Server running");
