@@ -46,9 +46,15 @@ app.post('/submit', async (req, res) => {
   }
 });
 
-app.get('/email', async (req, res) => {
+app.post('/email', async (req, res) => {
   try {
+    console.log("Received email check request");
+    console.log("Request body:", req.body);
+    if (!req.body || !req.body.email) {
+      return res.status(400).json({ error: 'Email is required' });
+    }
     const email = req.body.email;
+    console.log("Email received:", email);
     if (!email) {
       return res.status(400).json({ error: 'Email is required' });
     }
