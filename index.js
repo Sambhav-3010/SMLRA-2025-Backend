@@ -48,11 +48,17 @@ app.post('/submit', async (req, res) => {
 
 app.get('/email', async (req, res) => {
   try {
-    const forms = await Form.find({}, 'email');
+    const email = req.body.email;
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required' });
+    }
+    const forms = await Form.find({ email });
     if (!forms || forms.length === 0) {
       return res.status(200).json({ message: 'No emails found' });
     }
-    res.status(200).json({ message: "Email exists" });
+    else{
+      res.status(200).json({ message: "Email exists" });
+    }
   } catch (error) {
     console.error('Error fetching emails:', error);
     res.status(500).json({ error: 'Failed to fetch emails' });
