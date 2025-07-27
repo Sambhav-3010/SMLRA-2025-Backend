@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 app.post('/submit', async (req, res) => {
   try {
     const { name, email, rollNo, year, course, department, phone, age } = req.body;
-
+    console.log(req.body);
     if (!name || !email || !rollNo || !year || !course || !department || !phone || !age) {
       return res.status(400).json({ error: 'All fields are required.' });
     }
