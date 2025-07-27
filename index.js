@@ -49,7 +49,8 @@ app.post('/submit', async (req, res) => {
 
 app.post('/email', async (req, res) => {
   try {
-    const email = req.cookies.email;
+    const { email } = req.body;
+    console.log("Email received:", email);
     if (!email) {
       return res.status(400).json({ error: 'Email is required' });
     }
