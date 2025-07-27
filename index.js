@@ -48,13 +48,10 @@ app.post('/submit', async (req, res) => {
 
 app.post('/email', async (req, res) => {
   try {
-    console.log("Received email check request");
-    console.log("Request body:", req.body);
     if (!req.body || !req.body.email) {
       return res.status(400).json({ error: 'Email is required' });
     }
     const email = req.body.email;
-    console.log("Email received:", email);
     if (!email) {
       return res.status(400).json({ error: 'Email is required' });
     }
@@ -66,7 +63,6 @@ app.post('/email', async (req, res) => {
       res.status(200).json({ message: "Email exists" });
     }
   } catch (error) {
-    console.error('Error fetching emails:', error);
     res.status(500).json({ error: 'Failed to fetch emails' });
   }
 });
