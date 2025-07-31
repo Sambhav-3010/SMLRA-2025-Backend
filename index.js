@@ -54,7 +54,6 @@ app.post('/submit', async (req, res) => {
     const form = new Form({ name, email, rollNo, year, course, department, phone, age });
     await form.save();
 
-
     (async () => {
       try {
         const info = await transporter.sendMail({
