@@ -54,7 +54,23 @@ app.post('/submit', async (req, res) => {
     const form = new Form({ name, email, rollNo, year, course, department, phone, age });
     await form.save();
 
-   
+    (async () => {
+      try {
+        const info = await transporter.sendMail({
+          from: '"Manik" <manik.prakash@somaiya.edu>',
+          to: email,
+          subject: "Google x SMLRA",
+          html: `
+            <img src="https://drive.google.com/uc?export=view&id=1rqxQrM8-9DyBuuHiNRBEs3IMkARasN40" 
+            alt="Image" 
+            style="max-width: 100%; height: auto;" />`
+        });
+
+        console.log("Message sent:", info.messageId);
+      } catch (err) {
+        console.error("Error sending email:", err);
+      }
+    })();
 
     res.status(201).json({ message: 'Form submitted successfully!' });
 
